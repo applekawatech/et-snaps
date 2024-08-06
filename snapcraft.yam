@@ -1,0 +1,36 @@
+name: eternal-terminal
+base: core20
+version: '6.1.11'  # ETの最新バージョン
+summary: Re-Connectable secure remote shell
+description: |
+  Eternal Terminal is a remote shell that automatically reconnects without
+  interrupting the session.
+
+grade: stable
+confinement: classic  # ETはシステムリソースへのアクセスが必要なため
+
+parts:
+  eternal-terminal:
+    plugin: cmake
+    source: https://github.com/MisterTea/EternalTerminal.git
+    source-type: git
+    source-tag: et-v6.1.11
+    build-packages:
+      - libboost-dev
+      - libsodium-dev
+      - libprotobuf-dev
+      - protobuf-compiler
+      - libgflags-dev
+      - libutempter-dev
+    stage-packages:
+      - libboost-system1.71.0
+      - libsodium23
+      - libprotobuf17
+      - libgflags2.2
+
+apps:
+  et:
+    command: bin/et
+  etserver:
+    command: bin/etserver
+    daemon: simple
